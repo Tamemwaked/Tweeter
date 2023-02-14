@@ -2,7 +2,7 @@ const Renderer = function () {
   function renderPosts(posts) {
     for (let post of posts) {
       $("#posts").append(
-        `<div class="post" id="${post.id}"> ${post.text}</div>`
+        `<div class="post" id="${post.id}"> ${post.text} <br></div>`
       );
       for (let comment in post.comments) {
         $(`#${post.id}`).append(
