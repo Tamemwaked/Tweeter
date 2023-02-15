@@ -40,11 +40,8 @@ const Tweeter = function () {
   }
 
   function removePost(postID) {
-    for (const post in _posts) {
-      if (_posts[post].id === postID) {
-        _posts.splice(post, 1);
-      }
-    }
+    const index = findPostIndex(postID);
+    _posts.splice(index, 1);
   }
 
   function addComment(postID, comment) {
@@ -61,16 +58,22 @@ const Tweeter = function () {
     commentIdCounter++;
   }
   function removeComment(postID, commentID) {
-    for (let post of _posts) {
-      if (post.id === postID) {
-        for (let index in post.comments) {
-          if (post.comments[index].id == commentID) {
-            post.comments.splice(index, 1);
-          }
-        }
+    let postIndex = findPostIndex(postID);
+    let comments = _posts[postIndex].comments;
+    for (let comment in comments) {
+      if (comments[comment].id == commentID) {
+        _posts[postIndex].comments.splice(comment, 1);
       }
     }
   }
+  let findPostIndex = function (postID) {
+    for (const post of _posts) {
+      if (post.id === postID) {
+        return _posts.indexOf(post);
+      }
+    }
+    return -1;
+  };
 
   return {
     getPosts: getPosts,
